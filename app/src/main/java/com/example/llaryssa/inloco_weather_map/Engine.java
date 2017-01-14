@@ -1,6 +1,7 @@
 package com.example.llaryssa.inloco_weather_map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,6 +15,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -26,10 +29,17 @@ public class Engine {
     private String openWeatherAppId = "9b68a4fab1c08f6766a21b40115a38be";
     private Context context;
 
+    // Cities
+    private String[] cityNames;
+    private float[] cityMaxT;
+    private float[] cityMinT;
+    private String[] cityDescriptions;
+
     public Engine(LatLng position, Context ctx) {
         latlng = position;
         context = ctx;
     }
+
 
     public void getClosestCities() {
         String url = "http://api.openweathermap.org/data/2.5/find?lat="
@@ -40,8 +50,18 @@ public class Engine {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("engine", response);
+                        // parsing and populating data
+                        parseJson(response);
 
+                        Log.v("parse", response);
+                        Log.v("parse", "finished parsing");
+
+                        Intent intent = new Intent(context, ListActivity.class);
+                        intent.putExtra("names", cityNames);
+                        intent.putExtra("descriptions", cityDescriptions);
+                        intent.putExtra("minT", cityMinT);
+                        intent.putExtra("maxT", cityMaxT);
+                        context.startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
@@ -54,6 +74,47 @@ public class Engine {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
 
+    }
+
+    public void parseJson(String response) {
+        JSONObject json = null;
+
+        try {
+            json = new JSONObject(response);
+            int length = json.getInt("count");
+
+            cityNames = new String[length];
+            cityDescriptions = new String[length];
+            cityMaxT = new float[length];
+            cityMinT = new float[length];
+
+            JSONArray list = json.getJSONArray("list");
+            String name, desc;
+            float maxT, minT;
+
+            for (int i = 0; i < length; ++i) {
+                JSONObject jsonCity = list.getJSONObject(i);
+                JSONObject jsonCityMain = jsonCity.getJSONObject("main");
+                JSONArray jsonCityWeather = jsonCity.getJSONArray("weather");
+
+                name = jsonCity.getString("name");
+                maxT = (float) jsonCityMain.getDouble("temp_max");
+                minT = (float) jsonCityMain.getDouble("temp_min");
+                desc = "";
+
+                for (int j = 0; j < jsonCityWeather.length(); ++j) {
+                    JSONObject jsonCityWeatherEntry = jsonCityWeather.getJSONObject(j);
+                    desc += jsonCityWeatherEntry.getString("description");
+                }
+                cityNames[i] = name;
+                cityMinT[i] = minT;
+                cityMaxT[i] = maxT;
+                cityDescriptions[i] = desc;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +37,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Engine engine = new Engine(latlng, getApplicationContext());
                 engine.getClosestCities();
+
+                // put a loading page
+                Toast.makeText(MapsActivity.this, "Loading...", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -50,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onMapClick(LatLng position) {
                 gMap.clear();
                 latlng = position;
-                gMap.addMarker(new MarkerOptions().position(latlng).title(latlng.toString()));
+                gMap.addMarker(new MarkerOptions().position(latlng));
 
                 Log.d("arg0", latlng.toString());
             }
