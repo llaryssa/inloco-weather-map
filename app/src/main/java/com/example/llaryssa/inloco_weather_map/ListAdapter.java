@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 public class ListAdapter extends RecyclerView.Adapter {
 
-
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;

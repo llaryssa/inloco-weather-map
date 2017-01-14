@@ -34,8 +34,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         searchButton.setClickable(false);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MapsActivity.this, ListActivity.class);
-                startActivity(intent);
+                Engine engine = new Engine(latlng, getApplicationContext());
+                engine.getClosestCities();
             }
         });
     }
