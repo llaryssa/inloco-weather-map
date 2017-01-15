@@ -1,7 +1,10 @@
 package com.example.llaryssa.inloco_weather_map;
 
 import android.content.Context;
+
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -62,12 +65,33 @@ public class Engine {
                         intent.putExtra("minT", cityMinT);
                         intent.putExtra("maxT", cityMaxT);
                         context.startActivity(intent);
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.v("engine", error.toString());
+                        Log.v("engine", error.toString() + " / " + error.getMessage());
+                        Log.v("engine", "ERRO");
+
+////                         This is raising too many errors
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                        builder.setMessage(error.getMessage());
+//                        builder.setTitle(R.string.error);
+//                        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                Intent intent = new Intent(context, MapsActivity.class);
+//                                context.startActivity(intent);
+//                            }
+//                        });
+//                        AlertDialog dialog = builder.create();
+//                        dialog.show();
+
+                        Intent intent = new Intent(context, MapsActivity.class);
+                        intent.putExtra("latitude", latlng.latitude);
+                        intent.putExtra("longitude", latlng.longitude);
+                        context.startActivity(intent);
+                        Toast.makeText(context, error.getMessage() + ". Tente Novamente.", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -106,9 +130,11 @@ public class Engine {
                     JSONObject jsonCityWeatherEntry = jsonCityWeather.getJSONObject(j);
                     desc += jsonCityWeatherEntry.getString("description");
                 }
+
+                // temperatures are in Kelvin
                 cityNames[i] = name;
-                cityMinT[i] = minT;
-                cityMaxT[i] = maxT;
+                cityMinT[i] = minT - 273;
+                cityMaxT[i] = maxT - 273;
                 cityDescriptions[i] = desc;
             }
 

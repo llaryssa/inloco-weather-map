@@ -2,6 +2,7 @@ package com.example.llaryssa.inloco_weather_map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -26,26 +27,32 @@ public class CityDetail extends AppCompatActivity {
         float maxT = intent.getFloatExtra("maxT", 0);
         float minT = intent.getFloatExtra("minT", 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_id);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(CityDetail.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(name);
+        CollapsingToolbarLayout toolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolbar.setTitle(name);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
-
+        String minTstr = minT + "";
+        String maxTstr = maxT + "";
+        minTstr = minTstr.substring(0, minTstr.indexOf(".")+3);
+        maxTstr = maxTstr.substring(0, maxTstr.indexOf(".")+3);
 
         TextView textView = (TextView) findViewById(R.id.text_view_id);
-        String text = "Temperatura mínima (em Celsius): " + minT + "\nTemperatura máxima (em Celsius): " + maxT + "\nDescrição do tempo: " + desc;
+        String text = "Temperatura mínima (em Celsius)\n" + minTstr + "\n\nTemperatura máxima (em Celsius)\n" + maxTstr + "\n\nDescrição do tempo\n" + desc;
 
         int begin1 = 0;
-        int end1 = 33;
+        int end1 = 32;
 
-        int begin2 = end1 + (minT + "").length();
+        int begin2 = end1 + (minTstr + "").length();
         int end2 = begin2 + 34;
 
-        int begin3 = end2 + (maxT + "").length();
+        int begin3 = end2 + (maxTstr + "").length();
         int end3 = begin3 + 20;
 
         final SpannableStringBuilder str = new SpannableStringBuilder(text);

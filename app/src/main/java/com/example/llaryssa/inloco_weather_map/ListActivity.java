@@ -1,6 +1,7 @@
 package com.example.llaryssa.inloco_weather_map;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,9 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.selectCity);
+
         // getting the extras
         Intent intent = getIntent();
         cityNames = intent.getStringArrayExtra("names");
@@ -50,5 +54,12 @@ public class ListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // so it wont be back to loading page
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 }

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.llaryssa.inloco_weather_map.MapsActivity">
+    tools:context="com.example.llaryssa.inloco_weather_map.MapsActivity"
+    android:id="@+id/frame_layout_id" >
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -21,6 +22,14 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         app:srcCompat="@android:drawable/ic_menu_search"
-        android:id="@+id/search_button_id" />
+        android:id="@+id/search_button_id"
+        android:tint="@color/common_google_signin_btn_text_dark_default" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progress_bar_id" />
 
 </FrameLayout>

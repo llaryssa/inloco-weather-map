@@ -11,7 +11,8 @@
     <TextView
         android:id="@+id/text_view_id"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin" />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
 </android.support.v4.widget.NestedScrollView>
