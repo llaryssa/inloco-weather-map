@@ -110,30 +110,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         interstitialAd = new InterstitialAd(getApplicationContext());
         interstitialAd.setInterstitialAdListener(new InterstitialAdListener() {
-
             @Override
             public void onAdReady(final InterstitialAd ad) {
                 //Called when the view has received an advertisement and is ready to be shown
                 //You can call the interstitialAd present method here, or save it for any other moment you wish to present it.
                 ad.show();
             }
-
-            @Override
-            public void onAdError(InterstitialAd ad, AdError error) {
-                //Called when the ad request has failed.
-            }
-
-            @Override
-            public void onAdOpened(InterstitialAd ad) {
-                //Called right before the interstitialAd content is presented on the screen
-            }
-
-            @Override
-            public void onAdClosed(InterstitialAd ad) {
-                //Called right before the interstitialAd content is dismissed on the screen
-            }
         });
-
         AdRequest adRequest = new AdRequest();
         adRequest.setAdUnitId("d1e20695e6de98ddc8e26fb7d1c1b189ff47d96cdf47a02f1763840355717854");
         interstitialAd.loadAd(adRequest);
