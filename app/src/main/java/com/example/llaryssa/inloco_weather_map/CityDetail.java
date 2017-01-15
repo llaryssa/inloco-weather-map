@@ -31,6 +31,7 @@ public class CityDetail extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(CityDetail.this, MapsActivity.class);
+                intent.putExtra("isBack", true);
                 startActivity(intent);
             }
         });
