@@ -25,9 +25,22 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.google.android.gms:play-services:9.0.0'
+    compile 'com.google.android.gms:play-services:9.6.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:design:25.1.0'
+
+//    // Required
+    compile 'com.inlocomedia.android:android-sdk:2.4.+'
+//
+////    // Required
+////    compile 'com.android.support:support-v4:24.2.1'
+//
+//    // Required: Access GooglePlayServices advertising id
+    compile 'com.google.android.gms:play-services-ads:9.6.0'
+
+//    // Required for Notification Ads.
+//    // Recommended for additional Ad targeting
+    compile 'com.google.android.gms:play-services-location:9.6.0'
 
     testCompile 'junit:junit:4.12'
 }

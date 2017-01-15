@@ -91,7 +91,8 @@ public class Engine {
                         intent.putExtra("latitude", latlng.latitude);
                         intent.putExtra("longitude", latlng.longitude);
                         context.startActivity(intent);
-                        Toast.makeText(context, error.getMessage() + ". Tente Novamente.", Toast.LENGTH_LONG).show();
+                        // when is timeout error, the method getMessage() returns null, so I'm using toString()
+                        Toast.makeText(context, error.toString() + ": Tente Novamente.", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -116,6 +117,7 @@ public class Engine {
             String name, desc;
             float maxT, minT;
 
+            // getting through the cities
             for (int i = 0; i < length; ++i) {
                 JSONObject jsonCity = list.getJSONObject(i);
                 JSONObject jsonCityMain = jsonCity.getJSONObject("main");
